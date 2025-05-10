@@ -1,0 +1,68 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+*.pdb
+
+# Virtual environments
+env/
+venv/
+ENV/
+VENV/
+.venv/
+.ENV/
+
+# Django stuff
+*.log
+*.pot
+*.pyc
+*.sqlite3
+db.sqlite3
+media/
+staticfiles/
+
+# Django migrations
+**/migrations/**
+
+# VSCode and other IDEs
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# Secrets
+.env
+.env.*
+
+# Node modules (if using JS tools)
+node_modules/
+
+# Coverage reports
+htmlcov/
+.coverage
+.tox/
+.nox/
+.cache/
+
+# Testing
+.pytest_cache/
+junit.xml
+coverage.xml
+
+# mypy, pylint, etc.
+.mypy_cache/
+.dmypy.json
+.pyre/
+.pytype/
+
+# Docker
+*.pid
+*.seed
+*.swp
+docker-compose.override.yml

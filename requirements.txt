@@ -1,0 +1,6 @@
+django-extensions==4.1
+Django==5.2
+djangorestframework==3.16.0
+ipython==9.2.0
+channels==4.0.0
+daphne==4.0.0
