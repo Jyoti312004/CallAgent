@@ -7,7 +7,11 @@ from django.db import transaction
 from src.knowledge_base.knowledge import KnowledgeBase
 from src.model_helpers import KnowledgeBaseTypeOptions, QueryRequestStatusOptions, SourceOptions
 from src.models import QueryRequest, User
+from src.notification.notifier import Notifier
 from src.serializers import QueryRequestSerializer
+import logging
+
+logger = logging.getLogger("app_logger")
 
 
 class KnowledgeBaseViewSet(viewsets.ViewSet):
@@ -95,6 +99,11 @@ class KnowledgeBaseViewSet(viewsets.ViewSet):
             )
 
             if success:
+                if query_request_id:
+                    logger.info(f"query_request_id {query_request_id}")
+                    notifier = Notifier()
+                    user = QueryRequest.objects.get(id=query_request_id).user
+                    notifier.notify_customer(user.id, user.email, answer,question)
                 return Response(
                     {"message": "Knowledge added/updated successfully", "id": result},
                     status=status.HTTP_201_CREATED,
@@ -102,12 +111,28 @@ class KnowledgeBaseViewSet(viewsets.ViewSet):
             else:
                 return Response({"error": result}, status=status.HTTP_400_BAD_REQUEST)
         except Exception as e:
-            print("ERRROOROROROR",traceback.format_exc())
+            logger.error(f"Exception occured while adding knowledge {traceback.format_exc()}")
             return Response(
                 {"error": f"An error occurred: {str(e)}"},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR,
             )
 
+    @action(detail=False, methods=["get"], url_path="resolved-queries")
+    def get_resolved_queries(self, request):
+        """Get all resolved queries."""
+        try:
+            resolved_queries = self.knowledge_base.get_resolved_queries()
+            if not resolved_queries:
+                return Response(
+                    {"message": "No resolved queries found."},
+                    status=status.HTTP_200_OK,
+                )
+            return Response(resolved_queries, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response(
+                {"error": f"An error occurred: {str(e)}"},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            )
 
 class QueryRequestViewSet(viewsets.ModelViewSet):
 
@@ -127,16 +152,14 @@ class QueryRequestViewSet(viewsets.ModelViewSet):
                     {"error": "User ID and question are required."},
                     status=status.HTTP_400_BAD_REQUEST,
                 )
-            print("USER ID", user_id)
             user = User.objects.filter(id=user_id).first()
-            print("USER", user)
             query_request = QueryRequest.objects.create(user=user, question=question)
             return Response(
                 {"message": "Query request created successfully", "id": query_request.id},
                 status=status.HTTP_201_CREATED,
             )
         except Exception as e:
-            print(traceback.format_exc())
+            logger.error(f"Error in create_query :{traceback.format_exc()}")
             return Response(
                 {"error": f"An error occurred: {str(e)}"},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR,
@@ -172,6 +195,7 @@ class QueryRequestViewSet(viewsets.ModelViewSet):
     def get_all_queries(self, request):
         """Get all query requests."""
         try:
+            logger.info("Fetching all query requests")
             query_requests = QueryRequest.objects.all()
             serializer = self.get_serializer(query_requests, many=True)
             return Response(serializer.data, status=status.HTTP_200_OK)
@@ -249,6 +273,21 @@ class QueryRequestViewSet(viewsets.ModelViewSet):
                 {"message": "Query request deleted successfully"},
                 status=status.HTTP_204_NO_CONTENT,
             )
+        except Exception as e:
+            return Response(
+                {"error": f"An error occurred: {str(e)}"},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            )
+
+    @action(detail=False, methods=["get"], url_path="get-unresolved-queries")
+    def get_unresolved_queries(self, request):
+        """Get all unresolved query requests."""
+        try:
+            unresolved_queries = QueryRequest.objects.filter(
+                status=QueryRequestStatusOptions.UNRESOLVED
+            )
+            serializer = self.get_serializer(unresolved_queries, many=True)
+            return Response(serializer.data, status=status.HTTP_200_OK)
         except Exception as e:
             return Response(
                 {"error": f"An error occurred: {str(e)}"},

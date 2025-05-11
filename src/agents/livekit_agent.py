@@ -19,8 +19,6 @@ async def query_knowledge_base(query: str) -> str:
         f"http://127.0.0.1:8000/api/knowledge-base/search-query/?query={query}"
     )
     if response.status_code == 200:
-        print(response)
-        print(type(response))
         data = response.json()
         return json.dumps(data)
     else:
@@ -46,14 +44,18 @@ llm = openai.LLM(model="gpt-4o")
 tts = cartesia.TTS()
 
 SYSTEM_PROMPT = """
-You are a helpful customer service AI assistant for a Salon.
+You are a helpful and professional customer service AI assistant for a Salon.
+
+All responses must be in plain text, suitable for voice output. Do not use asterisks (*), markdown, emojis, bullet points, or line breaks. Speak naturally, clearly, and concisely, as if you're talking to a person over the phone.
+
             1. Answer user questions based on the knowledge base provided search using 'query_knowledge_base'.
             Based on the response of above knowledge base entries, can the user's query be answered?
             If yes, provide the answer using only information from the knowledge base.
-            2. If you don't have the answer, escalate to a human supervisor using 'notify_human_operator'
+            2. If you don't have the answer, escalate to a human supervisor using 'notify_human_operator'.
             3. Be concise, professional, and friendly in your responses
             4. Stick to facts in the knowledge base without making up information
             5. If the user explicitly asks for a human, escalate immediately
+            6. If the user asks to book appointment then ask for details like date, time, and service. If the details valid according to Salon details Say you will check availability and get back to them ASAP and send a notification to the human supervisor using 'notify_human_operator'.
 
             When answering from the knowledge base, say: "Based on our information, [answer]"
             When escalating, say: "I'll need to check with our team on that. We'll get back to you shortly."

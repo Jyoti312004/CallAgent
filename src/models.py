@@ -156,7 +156,7 @@ class KnowledgeBase(models.Model):
         """
         Override the save method to set the source to INITIAL if not provided.
         """
-        if not self.question and self.type != KnowledgeBaseTypeOptions.INFO:
+        if not self.question or not self.answer and self.type != KnowledgeBaseTypeOptions.INFO:
             raise ValueError("Question must be provided for query type.")
         
         if self.query_request and self.query_request.status != QueryRequestStatusOptions.RESOLVED:

@@ -4,9 +4,11 @@ import uuid
 from datetime import datetime
 from typing import Dict, List, Optional, Any, Tuple
 import os
-from src.model_helpers import KnowledgeBaseTypeOptions, SourceOptions
+from src.model_helpers import KnowledgeBaseTypeOptions, QueryRequestStatusOptions, SourceOptions
 from src.models import KnowledgeBase as KnowledgeBaseModel
+import logging
 
+logger = logging.getLogger("app_logger")
 
 class KnowledgeBase:
     """Manages the knowledge base for the AI agent."""
@@ -29,7 +31,7 @@ class KnowledgeBase:
             else:
                 return "No system information available."
         except Exception as e:
-            print(f"Error retrieving system information: {traceback.format_exc()}")
+            logger.error(f"Error retrieving system information: {traceback.format_exc()}")
             return str(e)
 
     def add_or_update_knowledge(
@@ -164,3 +166,23 @@ class KnowledgeBase:
         except Exception as e:
             print(f"Error calculating similarity: {traceback.format_exc()}")
             return 0.0
+
+    def get_resolved_queries(self) -> List[Dict[str, Any]]:
+        """Retrieve all resolved queries from the knowledge base."""
+        try:
+            resolved_queries = self.knowledge_collection.filter(
+                query_request__status=QueryRequestStatusOptions.RESOLVED,
+                source=SourceOptions.SUPERVISOR,
+            )
+            return [
+                {
+                    "question": query.question,
+                    "answer": query.answer,
+                    "resolved_at": query.updated_at,
+                    "id": str(query.id),
+                }
+                for query in resolved_queries
+            ]
+        except Exception as e:
+            print(f"Error retrieving resolved queries: {traceback.format_exc()}")
+            return []

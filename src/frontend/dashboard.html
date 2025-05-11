@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Salon - Customer Queries</title>
+    <link rel="stylesheet" href="css/dashboard_style.css">
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>Customer Queries</h1>
+        <p>Manage customer inquiries and responses</p>
+      </header>
+
+      <div class="tab-container">
+        <div class="tab active" data-tab="pending">Pending Queries</div>
+        <div class="tab" data-tab="unresolved">Unresolved Queries</div>
+        <div class="tab" data-tab="resolved">Resolved Queries</div>
+      </div>
+
+      <div id="pending-section" class="section active">
+        <div class="cards-container" id="pending-queries">
+          <div class="loader" id="initial-loader"></div>
+        </div>
+      </div>
+
+      <div id="unresolved-section" class="section">
+        <div class="cards-container" id="unresolved-queries">
+          <div class="loader" id="unresolved-loader"></div>
+        </div>
+      </div>
+
+      <div id="resolved-section" class="section">
+        <div class="cards-container" id="resolved-queries">
+          <div class="loader" id="resolved-loader"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal" id="query-modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Respond to Query</h2>
+          <span class="close-button" id="close-modal">&times;</span>
+        </div>
+        <div class="modal-body">
+          <div class="query-detail">
+            <h3>Question</h3>
+            <p id="modal-question"></p>
+            <div class="date" id="modal-date"></div>
+          </div>
+          <form id="response-form">
+            <input type="hidden" id="query-id" value="" />
+            <div class="form-group">
+              <label for="answer">Your Response</label>
+              <textarea
+                id="answer"
+                placeholder="Type your response here..."
+                required
+              ></textarea>
+            </div>
+            <button type="submit" id="submit-btn">Submit Response</button>
+            <div class="loader" id="submit-loader"></div>
+            <div class="status-message" id="status-message"></div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <script src="js/dashboard_script.js"></script>
+  </body>
+</html>
