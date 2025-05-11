@@ -1,6 +1,7 @@
 # CallAgent - Salon Customer Support System
 
 CallAgent is a comprehensive system designed to provide automated customer support for salon businesses. It combines a voice assistant powered by LiveKit with a Django-based backend for knowledge management, query handling, and supervisor dashboards.
+
 <img width="983" alt="Screenshot 2025-05-11 at 7 41 38 PM" src="https://github.com/user-attachments/assets/40596861-e19f-48fe-a4c9-04a7bc0c67d5" />
 
 ## Overview
