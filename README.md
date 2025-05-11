@@ -1,6 +1,7 @@
 # CallAgent - Salon Customer Support System
 
 CallAgent is a comprehensive system designed to provide automated customer support for salon businesses. It combines a voice assistant powered by LiveKit with a Django-based backend for knowledge management, query handling, and supervisor dashboards.
+<img width="983" alt="Screenshot 2025-05-11 at 7 41 38 PM" src="https://github.com/user-attachments/assets/40596861-e19f-48fe-a4c9-04a7bc0c67d5" />
 
 ## Overview
 
@@ -51,51 +52,51 @@ The system consists of:
 ### Installation Steps
 
 1. Clone the repository:
-   
+   ```
    git clone <repository-url>
    cd CallAgent
-   
+   ```
 
 2. Create and activate a virtual environment:
-   
+   ```
    python -m venv venv
    source venv/bin/activate  # On Windows: venv\Scripts\activate
-   
+   ```
 
 3. Install dependencies:
-   
+   ```
    pip install -r requirements.txt
-   
+   ```
 
 4. Run database migrations:
-   
+   ```
    python manage.py makemigrations
    python manage.py migrate
-   
+   ```
 
 5. Create a superuser:
-   
+   ```
    python manage.py createsuperuser
-   
+   ```
 
 6. Start the development server:
-   
+   ```
    python manage.py runserver
-   
+   ```
 
 7. Start Celery worker (in a separate terminal):
-   
+   ```
    celery -A CallAgent worker -l info
-   
+   ```
 
 8. Start Celery beat (in another separate terminal):
-   
+   ```
    celery -A CallAgent beat -l info
-   
+   ```
 9. Start Django server :
-    
+    ```
     python manage.py runserver
-    
+    ```
 
 ## API Endpoints
 
@@ -127,16 +128,16 @@ The supervisor dashboard is available at `src/frontend/dashboard.html`. To use i
 To run the voice agent:
 
 1. Install LiveKit dependencies:
-   
+   ```
    pip install livekit livekit-agents
-   
+   ```
 
 2. Set up the LiveKit server (follow LiveKit documentation)
 
 3. Run the agent:
-   
+   ```
    python -m src.agents.livekit_agent
-   
+   ```
 
 ## Project Structure
 
