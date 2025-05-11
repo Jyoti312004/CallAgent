@@ -15,21 +15,25 @@ The system consists of:
 ## Features
 
 ### AI Voice Agent
+
 - Answers common customer questions about salon services, hours, policies, etc.
 - Natural voice interactions powered by LiveKit
 - Automatically escalates complex queries to human supervisors
 
 ### Knowledge Management
+
 - Structured storage of salon information
 - Similarity-based query matching
 - Easy knowledge base updates through the admin interface
 
 ### Query Management
+
 - Automatic tracking of pending, resolved, and unresolved queries
 - Background task to mark expired queries as unresolved
 - Complete history of customer interactions
 
 ### Supervisor Dashboard
+
 - Clean, responsive web interface for supervisors
 - Tabbed navigation between pending, unresolved, and resolved queries
 - Detailed view of individual queries with response form
@@ -45,66 +49,80 @@ The system consists of:
 ## Setup and Installation
 
 ### Prerequisites
+
 - Python 3.9+
 - Redis server (for Celery)
 
 ### Installation Steps
 
 1. Clone the repository:
-   
-   git clone <repository-url>
+
+   ```
+   git clone https://github.com/Jyoti312004/CallAgent.git
    cd CallAgent
-   
+   ```
 
 2. Create and activate a virtual environment:
-   
+
+   ```
    python -m venv venv
    source venv/bin/activate  # On Windows: venv\Scripts\activate
-   
+   ```
 
 3. Install dependencies:
-   
+
+   ```
    pip install -r requirements.txt
-   
+   ```
 
 4. Run database migrations:
-   
+
+   ```
    python manage.py makemigrations
    python manage.py migrate
-   
+   ```
 
 5. Create a superuser:
-   
+
+   ```
    python manage.py createsuperuser
-   
+   ```
 
 6. Start the development server:
-   
+
+   ```
    python manage.py runserver
-   
+   ```
 
 7. Start Celery worker (in a separate terminal):
-   
+
+   ```
    celery -A CallAgent worker -l info
-   
+   ```
 
 8. Start Celery beat (in another separate terminal):
-   
+   ```
    celery -A CallAgent beat -l info
-   
+   ```
 9. Start Django server :
-    
-    python manage.py runserver
-    
+   ```
+   python manage.py runserver
+   ```
+10. Start LiveKit server (if applicable):
+    ```
+    python src/agents/livekit_server.py console
+    ```
 
 ## API Endpoints
 
 ### Knowledge Base Endpoints
+
 - `GET /api/knowledge-base/search-query/` - Search for similar entries in the knowledge base
 - `POST /api/knowledge-base/add-knowledge/` - Add or update knowledge in the knowledge base
 - `GET /api/knowledge-base/resolved-queries/` - Get all resolved queries
 
 ### Query Request Endpoints
+
 - `POST /api/query-request/create-query/` - Create a new query request
 - `GET /api/query-request/get-query/` - Get a specific query request
 - `GET /api/query-request/get-all-queries/` - Get all query requests
@@ -122,22 +140,6 @@ The supervisor dashboard is available at `src/frontend/dashboard.html`. To use i
 3. Use the tabs to navigate between pending, unresolved, and resolved queries
 4. Click on any query card to view details and submit a response
 
-## LiveKit Agent Configuration
-
-To run the voice agent:
-
-1. Install LiveKit dependencies:
-   
-   pip install livekit livekit-agents
-   
-
-2. Set up the LiveKit server (follow LiveKit documentation)
-
-3. Run the agent:
-   
-   python -m src.agents.livekit_agent
-   
-
 ## Project Structure
 
 - `CallAgent/` - Django project settings and configuration
@@ -153,6 +155,7 @@ To run the voice agent:
 ## Environment Variables
 
 For production, set the following environment variables:
+
 - `LIVEKIT_URL` - Webhook for notifications
 - `LIVEKIT_API_KEY` - Django secret key
 - `LIVEKIT_API_SECRET` - Set to 'False' in production

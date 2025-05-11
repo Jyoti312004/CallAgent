@@ -145,8 +145,8 @@ document.addEventListener("DOMContentLoaded", function () {
      const card = document.createElement("div");
      card.className = "card";
      card.innerHTML = `
-               <div class="status-badge"><span class="math-inline">\{query\.status\}</div\>
-               <h3\>Query \#</span>{query.id}</h3>
+               <div class="status-badge"><span class="math-inline">PENDING</div\>
+               <h3\>Query \#</span>${query.id}</h3>
                <p>${
                  query.question.length > 150
                    ? query.question.substring(0,150) + "...": query.question

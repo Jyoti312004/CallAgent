@@ -7,96 +7,6 @@ from src.model_helpers import (
     SourceOptions,
 )
 
-
-{
-    "salon_info": {
-        "name": "Glamora Salon & Spa",
-        "address": "123 Radiant Ave, Downtown Cityville, CA 90210",
-        "phone": "+1-555-123-4567",
-        "email": "info@glamorasalon.com",
-        "working_hours": {
-            "monday_to_friday": "10:00 AM - 8:00 PM",
-            "saturday": "9:00 AM - 6:00 PM",
-            "sunday": "Closed",
-        },
-        "social_media": {
-            "instagram": "https://instagram.com/glamorasalon",
-            "facebook": "https://facebook.com/glamorasalon",
-        },
-    },
-    "services": [
-        {
-            "category": "Hair",
-            "items": [
-                {"name": "Haircut - Women", "price": 40, "duration_minutes": 45},
-                {"name": "Haircut - Men", "price": 25, "duration_minutes": 30},
-                {"name": "Hair Coloring", "price": 70, "duration_minutes": 90},
-                {"name": "Hair Spa", "price": 60, "duration_minutes": 60},
-            ],
-        },
-        {
-            "category": "Skin",
-            "items": [
-                {"name": "Facial - Classic", "price": 50, "duration_minutes": 60},
-                {"name": "Facial - Anti-aging", "price": 80, "duration_minutes": 75},
-                {"name": "Threading - Eyebrows", "price": 10, "duration_minutes": 10},
-            ],
-        },
-        {
-            "category": "Nails",
-            "items": [
-                {"name": "Manicure", "price": 30, "duration_minutes": 40},
-                {"name": "Pedicure", "price": 35, "duration_minutes": 45},
-                {"name": "Nail Art", "price": 25, "duration_minutes": 30},
-            ],
-        },
-        {
-            "category": "Makeup",
-            "items": [
-                {"name": "Party Makeup", "price": 100, "duration_minutes": 90},
-                {"name": "Bridal Makeup", "price": 250, "duration_minutes": 180},
-            ],
-        },
-    ],
-    "staff": [
-        {
-            "id": 1,
-            "name": "Sophia Blake",
-            "role": "Senior Hair Stylist",
-            "experience_years": 8,
-            "specialization": ["Haircut", "Hair Spa", "Hair Coloring"],
-        },
-        {
-            "id": 2,
-            "name": "Liam Carter",
-            "role": "Skin Specialist",
-            "experience_years": 5,
-            "specialization": ["Facials", "Threading"],
-        },
-        {
-            "id": 3,
-            "name": "Ava Chen",
-            "role": "Nail Artist",
-            "experience_years": 4,
-            "specialization": ["Nail Art", "Manicure", "Pedicure"],
-        },
-        {
-            "id": 4,
-            "name": "Emma Rodriguez",
-            "role": "Makeup Artist",
-            "experience_years": 7,
-            "specialization": ["Bridal Makeup", "Party Makeup"],
-        },
-    ],
-    "policies": {
-        "cancellation": "Cancellations must be made at least 24 hours in advance. Late cancellations may be subject to a 50% charge.",
-        "booking": "Advance booking is recommended. Walk-ins are accepted based on availability.",
-        "payments": ["Cash", "Credit Card", "Mobile Wallets"],
-        "safety": "All tools are sanitized after every use. Masks are optional but recommended.",
-    },
-}
-
-
 class User(models.Model):
     """
     Model representing a user.
@@ -109,7 +19,6 @@ class User(models.Model):
 
     def __str__(self):
         return self.name
-
 
 
 class QueryRequest(models.Model):
